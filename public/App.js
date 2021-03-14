@@ -1,5 +1,14 @@
 const divInstall = document.querySelector('.divInstall');
 const butInstall = document.querySelector('.butInstall');
+
+
+
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker is registered',reg))
+        .catch((err) => console.log('Service Worker is not registered',err));
+}
+
 window.addEventListener('beforeinstallprompt', (event) => {
       console.log('👍', 'beforeinstallprompt', event);
       // Stash the event so it can be triggered later.
@@ -31,14 +40,3 @@ window.addEventListener('beforeinstallprompt', (event) => {
       // Clear the deferredPrompt so it can be garbage collected
       window.deferredPrompt = null;
 });
-if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('./sw.js')
-        .then((reg) => console.log('Service Worker is registered',reg))
-        .catch((err) => console.log('Service Worker is not registered',err));
-}
-// if (window.location.protocol === 'http:') {
-//     const requireHTTPS = document.getElementById('requireHTTPS');
-//     const link = requireHTTPS.querySelector('a');
-//     link.href = window.location.href.replace('http://', 'https://');
-//     requireHTTPS.classList.remove('hidden');
-// }
