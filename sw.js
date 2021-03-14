@@ -8,6 +8,12 @@ const assets = [
     './public/css/Article.css',
     './public/css/Blog.css',
     './public/css/tailwind.css',
+    './favicon.ico',
+    './icons/apple-touch-icon.png',
+    './icons/favicon-32x32.png',
+    './icons/favicon-16x16.png',
+    './icons/manifest-icon-192.png',
+    './icons/manifest-icon-512.png',
 ];
 //install service worker
 self.addEventListener('install', evt =>{
