@@ -1,14 +1,13 @@
 const staticCacheName = 'site-static'; 
 
 const assets = [
-    '/',
-    '/index.html',
-    '/Blog.html',
-    'Space_Article.html',
-    '/public/App.js',
-    '/public/css/Article.css',
-    '/public/css/Blog.css',
-    '/public/css/tailwind.css',
+    './index.html',
+    './Blog.html',
+    './Space_Article.html',
+    './public/App.js',
+    './public/css/Article.css',
+    './public/css/Blog.css',
+    './public/css/tailwind.css',
 ];
 //install service worker
 self.addEventListener('install', evt =>{
