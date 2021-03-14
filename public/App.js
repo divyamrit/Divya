@@ -1,5 +1,5 @@
 if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('/sw.js')
+    navigator.serviceWorker.register('Divya/sw.js')
         .then((reg) => console.log('Service Worker is registered',reg))
         .catch((err) => console.log('Service Worker is not registered',err));
 }
