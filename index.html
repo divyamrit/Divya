@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="How all this world WorKs,?">
+        <meta name="keywords" content="Divyamrit Blog,Blogs by Divyamrit,Divyamrit Articles">
+        <meta name="author" content="Divyamrit||Sukhpreet Singh">
+        <meta name="theme-color" content="#FFFF00">
+        <title>Divyamrit Blogs</title>
+        <link rel="stylesheet" href="./public/css/tailwind.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Delius&display=swap" rel="stylesheet">
+        <link rel="manifest" href="manifest.json">
+        <style>
+      .font-kalam {
+        font-family: "Amatic SC", cursive;
+      }
+      .font-albert {
+        font-family: "Delius", cursive;
+      }
+      .butInstall {
+        background-color: black;
+        color: white;
+        font-size: xx-large;
+        padding: 1rem;
+        border-radius: 9999px;
+      }
+        .divInstall{
+          position: absolute;
+          top: 80vh;
+          left: 7vw;
+          display: flex;
+          justify-content: center;
+        }
+        </style>
+    </head>
+    <body class="bg-cyan-700 dark:bg-amber-200 transition-colors duration-700 ease-out">
+        <div class="divInstall">
+            <button class="butInstall">Install</button>
+        </div>
+        <div class="flex flex-row content-center items-center place-content-between bg-cyan-200 dark:bg-yellow-600 transition duration-1000 ease-in-out p-4">
+            <h1 class="font-albert text-4xl text-light-blue-900 dark:text-yellow-50">Divyamrit</h1>
+            <div role="button" onclick="D()">
+                <canvas id="riveCanvas" width="70" height="70"></canvas>
+            </div>
+        </div>
+        <section class="flex flex-col place-items-center mt-5 gap-5">
+            <a href="Blog.html" class="font-kalam text-rose-500 text-4xl text-cyan-200 dark:text-yellow-700 bg-light-blue-400  dark:bg-yellow-500 w-10/12 pl-3 pr-3 pt-1 pb-2 rounded-lg">
+                Article
+            </a>
+            <a href="#" class="font-kalam text-rose-500 text-4xl text-cyan-200 dark:text-yellow-700 bg-light-blue-400  dark:bg-yellow-500 w-10/12 pl-3 pr-3 pt-1 pb-2 rounded-lg">
+                Quote
+            </a>
+            <a href="#" class="font-kalam text-rose-500 text-4xl text-cyan-200 dark:text-yellow-700 bg-light-blue-400  dark:bg-yellow-500 w-10/12 pl-3 pr-3 pt-1 pb-2 rounded-lg">
+                myself
+            </a>
+            <a href="#" class="font-kalam text-rose-500 text-4xl text-cyan-200 dark:text-yellow-700 bg-light-blue-400  dark:bg-yellow-500 w-10/12 pl-3 pr-3 pt-1 pb-2 rounded-lg">
+                Why all this ?
+            </a>
+        </section>
+    </body>
+    <script src="/public/App.js"></script>
+    <script>
+      const divInstall = document.querySelector('.divInstall');
+      const butInstall = document.querySelector('.butInstall');
+      window.addEventListener('beforeinstallprompt', (event) => {
+      console.log('👍', 'beforeinstallprompt', event);
+      // Stash the event so it can be triggered later.
+      window.deferredPrompt = event;
+      // Remove the 'hidden' class from the install button container
+      divInstall.classList.toggle('hidden', false);
+      });
+      butInstall.addEventListener('click', async () => {
+      console.log('👍', 'butInstall-clicked');
+      const promptEvent = window.deferredPrompt;
+      if (!promptEvent) {
+      // The deferred prompt isn't available.
+      return ;
+      }
+      // Show the install prompt.
+      promptEvent.prompt();
+      console.log("Prompt returned")
+      // Log the result
+      const result = await promptEvent.userChoice;
+      console.log('👍', 'userChoice', result);
+      // Reset the deferred prompt variable, since
+      // prompt() can only be called once.
+      window.deferredPrompt = null;
+      // Hide the install button.
+      divInstall.classList.toggle('hidden', true);
+      });
+      window.addEventListener('appinstalled', (event) => {
+      console.log('👍', 'appinstalled', event);
+      // Clear the deferredPrompt so it can be garbage collected
+      window.deferredPrompt = null;
+      });
+
+    </script>
+    <!-- <script src="/node_modules/rive-canvas/rive.js"></script> -->
+    <script src="https://unpkg.com/rive-canvas@0.6.5/rive.js"></script>
+    <script>
+    var anim = "Moon";
+    function D() {
+      // first, instantiate the Rive engine and load the WASM file(s)
+      Rive({
+        locateFile: (file) => "https://unpkg.com/rive-canvas@0.6.5/" + file,
+      }).then((rive) => {
+        // Rive's ready to rock 'n roll
+        // Let's load up a Rive animation file...
+        const req = new Request("assets/riveBueSun/bluesun.riv");
+        fetch(req)
+          .then((res) => {
+            return res.arrayBuffer();
+          })
+          .then((buf) => {
+            // we've got the raw bytes of the animation,
+            // let's load them into a Rive file
+            const file = rive.load(new Uint8Array(buf));
+            // ...
+            const artboard = file.defaultArtboard();
+            const myAnim = artboard.animation(anim);
+            const myAnimInstance = new rive.LinearAnimationInstance(myAnim);
+            const canvas = document.getElementById("riveCanvas");
+            const ctx = canvas.getContext("2d");
+            const renderer = new rive.CanvasRenderer(ctx);
+            artboard.advance(0);
+            ctx.save();
+            renderer.align(
+              rive.Fit.contain,
+              rive.Alignment.center,
+              {
+                minX: 0,
+                minY: 0,
+                maxX: canvas.width,
+                maxY: canvas.height,
+              },
+              artboard.bounds
+            );
+            artboard.draw(renderer);
+            ctx.restore();
+            let lastTime = 0;
+            function draw(time) {
+              if (!lastTime) {
+                lastTime = time;
+              }
+              const elapsedTime = (time - lastTime) / 1000;
+              lastTime = time;
+
+              myAnimInstance.advance(elapsedTime);
+              myAnimInstance.apply(artboard, 1.0);
+              artboard.advance(elapsedTime);
+
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+              ctx.save();
+              renderer.align(
+                rive.Fit.contain,
+                rive.Alignment.center,
+                {
+                  minX: 0,
+                  minY: 0,
+                  maxX: canvas.width,
+                  maxY: canvas.height,
+                },
+                artboard.bounds
+              );
+              artboard.draw(renderer);
+              ctx.restore();
+
+              requestAnimationFrame(draw);
+            }
+            if (anim == "Sun") {
+              anim = "Moon";
+              document.querySelector('html').classList.add('dark')
+
+            } else {
+              anim = "Sun";
+              document.querySelector('html').classList.remove('dark')
+            }
+            requestAnimationFrame(draw);
+          });
+      });
+    }
+    D();
+    </script>
+</html>
