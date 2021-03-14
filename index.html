@@ -17,6 +17,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Delius&display=swap" rel="stylesheet">
+        <script src="./public/App.js" defer></script>
         <link rel="manifest" href="manifest.json">
         <style>
       .font-kalam {
@@ -66,43 +67,6 @@
             </a>
         </section>
     </body>
-    <script src="./public/App.js"></script>
-    <script>
-      const divInstall = document.querySelector('.divInstall');
-      const butInstall = document.querySelector('.butInstall');
-      window.addEventListener('beforeinstallprompt', (event) => {
-      console.log('👍', 'beforeinstallprompt', event);
-      // Stash the event so it can be triggered later.
-      window.deferredPrompt = event;
-      // Remove the 'hidden' class from the install button container
-      divInstall.classList.toggle('hidden', false);
-      });
-      butInstall.addEventListener('click', async () => {
-      console.log('👍', 'butInstall-clicked');
-      const promptEvent = window.deferredPrompt;
-      if (!promptEvent) {
-      // The deferred prompt isn't available.
-      return ;
-      }
-      // Show the install prompt.
-      promptEvent.prompt();
-      console.log("Prompt returned")
-      // Log the result
-      const result = await promptEvent.userChoice;
-      console.log('👍', 'userChoice', result);
-      // Reset the deferred prompt variable, since
-      // prompt() can only be called once.
-      window.deferredPrompt = null;
-      // Hide the install button.
-      divInstall.classList.toggle('hidden', true);
-      });
-      window.addEventListener('appinstalled', (event) => {
-      console.log('👍', 'appinstalled', event);
-      // Clear the deferredPrompt so it can be garbage collected
-      window.deferredPrompt = null;
-      });
-
-    </script>
     <!-- <script src="/node_modules/rive-canvas/rive.js"></script> -->
     <script src="https://unpkg.com/rive-canvas@0.6.5/rive.js"></script>
     <script>
